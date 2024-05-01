@@ -1,14 +1,37 @@
 /* styles.css */
 
+.our-services {
+  padding: 50px 0; /* Adjust padding as needed */
+  background-color: #f9f9f9; /* Set background color for the section */
+}
+
+.container {
+  max-width: 1200px; /* Set maximum width for the container */
+  margin: 0 auto; /* Center the container */
+  padding: 0 15px; /* Add horizontal padding */
+}
+
+.service-cards {
+  display: flex;
+  flex-direction: row; /* Set flex direction to row for desktop screens */
+  justify-content: space-between; /* Distribute space evenly between cards */
+  flex-wrap: wrap; /* Allow cards to wrap to the next row if needed */
+}
+
 .service-card {
-  background-color:rgba(199,29,107,255);
+  background-color: rgba(199, 29, 107, 255);
   border-radius: 15px;
   border: 1px solid #e0e0e0;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
   position: relative;
-  margin-bottom: 20px;
+  width: calc(33.33% - 20px); /* 33.33% to fit 3 cards in one row, minus margin */
+  margin-bottom: 20px; /* Add margin between cards */
+}
+
+.service-card:last-child {
+  margin-right: 0; /* Remove margin for the last card in the row */
 }
 
 .cutout {
@@ -38,7 +61,7 @@
 
 h3 {
   font-size: 20px;
-  margin-top:25px;
+  margin-top: 25px;
   color: #333;
 }
 
@@ -47,19 +70,15 @@ p {
   color: #555;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 992px) {
   .service-card {
-    display: flex;
+    width: calc(50% - 20px); /* 50% to fit 2 cards in one row, minus margin */
   }
+}
 
-  .service-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .cutout {
-    display: none;
+@media (max-width: 768px) {
+  .service-card {
+    width: calc(100% - 20px); /* 100% to fit 1 card in one row, minus margin */
+    margin-right: 0;
   }
 }
