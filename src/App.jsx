@@ -11,10 +11,11 @@ import images from "./data/ImagesHero";
 import OurServicesSection from "./components/ServicesCard";
 import GridView from "./components/ProductCategory";
 import ResponsiveGrid from "./components/ProductCategory";
-import WatchAndShop from "./components/WatchShop";
 import NewArrivals from "./components/NewArrivals";
 import Footer from "./components/Footer";
 import CardContainer from "./components/HorizontalCards";
+
+import Carousel from "./components/Carousel";
 
 function App() {
   // Dummy data for new arrivals
@@ -44,6 +45,7 @@ const bestSeller = [
       <HighlightedText text="Hello This is Prashant here , I am MERN Developer" />
 
       <Header />
+    <Carousel/>
       <CustomCarousel>
         {images.map((image, index) => {
           return <img key={index} src={image.imgURL} alt={image.imgAlt} />;
