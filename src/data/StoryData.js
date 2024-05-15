@@ -1,24 +1,20 @@
-// DummyData.js
-const dummyStories = [
-    {
-      id: 1,
-      username: 'user1',
-      profilePicture: 'https://via.placeholder.com/50',
-      content: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 2,
-      username: 'user2',
-      profilePicture: 'https://via.placeholder.com/50',
-      content: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 3,
-      username: 'user3',
-      profilePicture: 'https://via.placeholder.com/50',
-      content: 'https://via.placeholder.com/150',
-    },
-  ];
-  
-  export default dummyStories;
-  
+// data/Story.js
+
+export const storyStatusData = [
+  {
+    imageUrl: "../assets/Web_Banner_1_415367f0-0d24-4c76-ae94-87dacd4c0aa5.jpg - Copy.webp",
+    videoUrl: "", // URL of the video (leave empty if it's an image)
+    duration: 5000, // Duration of the story in milliseconds (optional)
+  },
+  {
+    imageUrl: "",
+    videoUrl: "",
+    duration: 5000,
+  },
+  {
+    imageUrl: "",
+    videoUrl: "",
+    duration: 10000,
+  },
+  // Add more items as needed
+];

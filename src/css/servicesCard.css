@@ -13,9 +13,9 @@
 
 .service-cards {
   display: flex;
-  flex-direction: row; /* Set flex direction to row for desktop screens */
+  flex-direction: row; /* Set flex direction to row */
   justify-content: space-between; /* Distribute space evenly between cards */
-  flex-wrap: wrap; /* Allow cards to wrap to the next row if needed */
+  flex-wrap: nowrap; /* Prevent wrapping to the next row */
 }
 
 .service-card {
@@ -26,17 +26,14 @@
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
   position: relative;
-  width: calc(33.33% - 20px); /* 33.33% to fit 3 cards in one row, minus margin */
-  margin-bottom: 20px; /* Add margin between cards */
-}
-
-.service-card:last-child {
-  margin-right: 0; /* Remove margin for the last card in the row */
+  width: calc(33.33% - 30px); /* Adjusted to account for margin */
+  margin: 0 15px 20px; /* Added horizontal and bottom margin */
+  padding-top: 45px; /* Added top padding to make space for the cutout */
 }
 
 .cutout {
   position: absolute;
-  top: -15px;
+  top: -10px; /* Adjusted to position the cutout higher */
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -51,17 +48,17 @@
 
 .cutout i {
   font-size: 30px;
-  color: #fff;
+  color: #c71d6b;
 }
 
 .service-content {
-  padding: 20px;
+  padding: 20px; /* Adjusted padding */
   text-align: center;
 }
 
 h3 {
   font-size: 20px;
-  margin-top: 25px;
+  margin-top: 20px; /* Reduced margin-top */
   color: #333;
 }
 
@@ -71,14 +68,18 @@ p {
 }
 
 @media (max-width: 992px) {
+  .service-cards {
+    flex-wrap: wrap; /* Allow cards to wrap to the next row */
+  }
+  
   .service-card {
-    width: calc(50% - 20px); /* 50% to fit 2 cards in one row, minus margin */
+    width: calc(50% - 30px); /* Adjusted to account for margin */
   }
 }
 
 @media (max-width: 768px) {
   .service-card {
-    width: calc(100% - 20px); /* 100% to fit 1 card in one row, minus margin */
-    margin-right: 0;
+    width: calc(100% - 30px); /* Adjusted to account for margin */
+    margin: 0 15px 20px; /* Added horizontal and bottom margin */
   }
 }

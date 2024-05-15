@@ -1,6 +1,6 @@
 const images = [
   {
-    imgURL: "https://www.meenabazaar.shop/cdn/shop/files/Sale_banner.jpg?v=1701152683&width=2000",
+    imgURL: "https://www.canva.com/templates/EAFKG4KiOj4-black-yellow-bold-bag-fashion-sale-banner",
     imgAlt: "img-1",
   },
   {

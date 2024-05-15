@@ -1,0 +1,79 @@
+/* NewArrivals.css */
+
+.section-header {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.section-header hr {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  z-index: -1;
+}
+
+.section-header span {
+  font-size: xx-large;
+  background-color: white;
+  padding: 0 10px;
+  font-family: "Playfair Display", serif; /* Font style moved from inline styles */
+}
+
+.section-header p {
+  font-family: "Century Gothic", sans-serif;
+  font-weight: 600;
+}
+
+.product-container {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  flex-wrap: nowrap; /* Prevent wrapping to a new line */
+}
+
+.product-card {
+  flex: 1 0 auto; /* Allow each card to grow equally and stay in one row */
+  margin: 0; /* Remove margins between cards */
+}
+
+.product-image {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.product-name {
+  font-size: 14px;
+  font-family: "Century Gothic", sans-serif;
+  font-weight: 400;
+  font-weight: bold;
+}
+
+.product-price {
+  color: #777; /* Adjust text color */
+}
+
+
+/* Media query for mobile screens */
+@media (max-width: 1023px) {
+  .product-card {
+    margin: 0 5px; /* Add a 10px gap between cards (5px on each side) */
+  }
+}
+
+/* Media query for larger screens */
+@media (min-width: 1024px) {
+  .product-container {
+    justify-content: space-between; /* Distribute the space between cards */
+  }
+
+  .product-card {
+    flex: 1 0 0; /* Allow each card to grow and fill remaining space */
+    margin: 0; /* Remove margins between cards */
+  }
+
+  .product-image {
+    height: 400px; /* Set a fixed height to increase the image size */
+    object-fit: cover; /* Ensure the image covers the area without stretching */
+  }
+}

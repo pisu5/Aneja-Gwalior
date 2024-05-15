@@ -53,7 +53,7 @@ export default function ResponsiveGrid() {
               {/* Use the Image component with dynamic src */}
               <Image src={item.imageUrl} alt={`Image ${item.id}`} />
               {/* Overlay text */}
-             {/*<OverlayText variant="body2">{item.text}</OverlayText>*/ } 
+            { /*<OverlayText variant="body2">{item.text}</OverlayText>*/ }
             </ItemContainer>
           </Grid>
         ))}
