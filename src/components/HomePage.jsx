@@ -9,36 +9,43 @@ import NewArrivals from "./NewArrivals";
 import { bestSeller, buyMoreSpendLess } from "../data/dummydata";
 import newArrivals from "../data/DataNewArrivals";
 import CardContainer from "./HorizontalCards";
+import Example from "./ProductsDetails/ProductToCart";
+import ProductPage from "./YouMayAlsoLike";
+import CustomerReviews from "./CustomerReview";
 import Footer from "./Footer";
+import Offerbanner from "./OfferBanner";
 
 const HomePage = () => {
   return (
     <div>
-      <Carousel/>
-      <OurServicesSection/>
-      <ResponsiveGrid/>
+      <Carousel />
+      <CustomCarousel />
+      <OurServicesSection />
+      <ResponsiveGrid />
       <NewArrivals
         headerText={"New Arrivals"}
         pTag={"Arrivals For The Finest"}
-        data={buyMoreSpendLess}
+        collection={"New Arrivals"}
       />
 
       <NewArrivals
         headerText={"Sale"}
         pTag={"Buy More, Spend Less"}
-        data={buyMoreSpendLess}
+        collection={"Sale"}
       />
       <NewArrivals
         headerText={"Best Sellers"}
         pTag={"Deal With Best Calender Sellers"}
-        data={bestSeller}
+        collection={"Best Seller"}
       />
+      <Offerbanner />
       <NewArrivals
         headerText={"What To Wear For"}
         pTag={"Shop Based On Event"}
-        data={bestSeller}
+        collection={"Event Wear"}
       />
       <CardContainer />
+      <CustomerReviews />
     </div>
   );
 };

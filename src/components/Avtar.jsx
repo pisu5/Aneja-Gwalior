@@ -1,6 +1,6 @@
 import React from "react";
 
-const Avatar = ({ image, onClick }) => {
+const Avtar = ({ image, onClick }) => {
   return (
     <section className="avatar-detail" onClick={onClick}>
       <div className="avatar-box">
@@ -10,5 +10,4 @@ const Avatar = ({ image, onClick }) => {
     </section>
   );
 };
-
-export default Avatar;
+export default Avtar;

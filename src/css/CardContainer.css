@@ -1,74 +1,58 @@
 .card-container {
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
-    scrollbar-width: none; /* Hides scrollbar for Firefox */
-    -ms-overflow-style: none; /* Hides scrollbar for IE/Edge */
-    scroll-snap-type: x mandatory; /* Enable horizontal scrolling and snapping */
-  }
-  
-  .card {
-    margin-left: 40px;
-    flex: 0 0 auto;
-    margin-right: 20px; /* Adjust the gap between cards */
-    padding: 20px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    scroll-snap-align: start; /* Snap each card to the start of the viewport */
-  }
-  
-  .card:last-child {
-    margin-right: 0;
-  }
-  
-  .card-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .card-heading {
-margin-left: 40%;
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .card-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
 
-    font-size: 14px;
-    color: #666;
+.card {
+  flex: 1 1 calc(25% - 20px);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+  margin-bottom: 15px;
+  color: #03a9f4;
+}
+
+.card-heading {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-content {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .card {
+    flex: 1 1 calc(33.33% - 20px);
   }
-  .card-icon{
-    margin-left: 50%;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 calc(50% - 20px);
   }
-  
-  /* Scroll indicators */
-  .card-container::after {
-    content: '';
-    display: block;
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #ccc;
-    z-index: 999;
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex: 1 1 100%;
   }
-  
-  /* Remove border and box shadow on desktop screens */
-  @media (min-width: 768px) {
-    .card-container {
-      justify-content: flex-start;
-    }
-  
-    .card {
-      margin-right: 0;
-      border: none; /* Remove border */
-      box-shadow: none; /* Remove box shadow */
-    }
-  }
-  
+}

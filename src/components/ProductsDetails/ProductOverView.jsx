@@ -4,43 +4,37 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import FilterIcon from "@mui/icons-material/FilterList";
-import SortIcon from "@mui/icons-material/Sort";
-import Divider from "@mui/material/Divider";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import app from "../../firebaseConfig";
-import { ref } from "firebase/database";
-import { getDatabase } from "firebase/database";
-import { get } from "firebase/database"; // Import Realtime Database module
-// Import Firebase config file
+import {
+  ref,
+  getDatabase,
+  get,
+  query,
+  orderByChild,
+  equalTo,
+} from "firebase/database";
+import { useNavigate } from "react-router-dom";
 
 // Styled components...
+const navHeight = 64; // Adjust according to your actual navbar height
+const footerHeight = 64; // Adjust according to your actual footer height
+
+const MainContent = styled(Box)(({ theme }) => ({
+  marginTop: navHeight, // Adjust for navbar height
+  marginBottom: footerHeight, // Adjust for footer height
+}));
+
 const FilterSortWrapper = styled("div")(({ theme }) => ({
   marginLeft: "40px",
   display: "flex",
   alignItems: "center",
-  justifyContent: "center", // Center horizontally
+  justifyContent: "center",
   borderBottom: `1px solid ${theme.palette.divider}`,
   paddingBottom: theme.spacing(1),
   marginBottom: theme.spacing(2),
 }));
-const StyledElement = styled("div")(({ theme }) => ({
-  // Shared styles
 
-  // Add any other shared styles here
-  "& h2, & p": {
-    fontFamily: "Century Gothic, sans-serif",
-    fontSize: "14px",
-    fontWeight: "400",
-    // Styles for h2 and p elements
-    color: "rgb(26, 26, 26)", // Example additional style
-  },
-  // You can add more selectors and styles as needed
-}));
-
-const FilterLabel = styled(Box)(({ theme }) => ({
-  marginRight: theme.spacing(1),
-}));
 const StyledH3 = styled("h3")({
   margin: "10px",
   fontSize: "32px",
@@ -49,8 +43,9 @@ const StyledH3 = styled("h3")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: "100%", // Ensure the container takes up full height
+  height: "100%",
 });
+
 const StyledH2 = styled("h2")({
   fontSize: "14px",
   fontFamily: "Century Gothic, sans-serif",
@@ -59,39 +54,56 @@ const StyledH2 = styled("h2")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: "100%", // Ensure the container takes up full height
+  height: "100%",
+});
+const ItemContainer = styled(Box)({
+  position: "relative",
 });
 
-const IconWrapper = styled(Box)(({ theme }) => ({
-  marginLeft: theme.spacing(1),
-  marginRight: theme.spacing(1),
-}));
+const ButtonContainer = styled(Box)({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  opacity: 0,
+  transition: "opacity 0.3s ease",
+});
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
   padding: theme.spacing(2),
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
 const LikeButton = styled(IconButton)({
-  // Styles for the like button
-  color: "red", // Example additional style
+  color: "red",
   "&:hover": {
     backgroundColor: "transparent",
   },
 });
+
+
 const database = getDatabase(app);
 
-const ResponsiveeGrid = () => {
+const ResponsiveGrid = ({ category }) => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const productsRef = ref(database, "AdminData/products");
+    const productsRef = ref(database, "AdminData/Products");
 
-    get(productsRef)
-      .then((snapshot) => {
+    const fetchData = async () => {
+      try {
+        const productsQuery = query(
+          productsRef,
+          orderByChild("category"),
+          equalTo(category)
+        );
+        const snapshot = await get(productsQuery);
         if (snapshot.exists()) {
           const data = snapshot.val();
           const productList = Object.keys(data).map((key) => ({
@@ -102,59 +114,70 @@ const ResponsiveeGrid = () => {
         } else {
           console.log("No data available");
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error getting data:", error);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, [category]);
+  const handleClick = (productId) => {
+    navigate(`/product/${productId}`); // Redirect to product details page
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <FilterSortWrapper>
-        <FilterLabel>Filter by:</FilterLabel>
-        <IconWrapper>
-          <IconButton color="primary" aria-label="filter">
-            <FilterIcon fontSize="small" />
-          </IconButton>
-        </IconWrapper>
-        <Divider orientation="vertical" flexItem />
-        <IconWrapper>
-          <IconButton color="primary" aria-label="sort">
-            <SortIcon fontSize="small" />
-          </IconButton>
-        </IconWrapper>
-        <FilterLabel>Sort by:</FilterLabel>
-      </FilterSortWrapper>
-
-      <StyledH3>Kurti</StyledH3>
-      <StyledH2>149 Products</StyledH2>
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-      >
-        {products.map((product) => (
-          <Grid item xs={2} sm={4} md={4} key={product.id}>
-            <Item>
-              {/* Use the first image URL from the imgUrl array */}
-              <img
-                src={product.imageUrls ? product.imageUrls[0] : ""}
-                alt={product.name}
-              />
-              <StyledElement>
-                <h2 className="pItems">{product.name}</h2>
-                <p className="pItems">{product.description}</p>
-                <LikeButton>
-                  <FavoriteBorder />
-                </LikeButton>
-                <p className="pItems">Price: ${product.price}</p>
-              </StyledElement>
-            </Item>
+    <div>
+      <MainContent>
+        <Box sx={{ flexGrow: 1 }}>
+          <FilterSortWrapper>
+            <StyledH3>{category}</StyledH3>
+            <StyledH2>{products.length} Products</StyledH2>
+          </FilterSortWrapper>
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+          >
+            {products.map((product) => (
+              <Grid
+                item
+                xs={2}
+                sm={4}
+                md={4}
+                key={product.id}
+                
+              >
+                <Item>
+                  <ItemContainer>
+                    <img
+                      src={product.imageUrls ? product.imageUrls[0] : ""}
+                      alt={product.name}
+                    />
+                    <ButtonContainer className="buttons">
+                      <IconButton color="primary" aria-label="quick view">
+                        Quick View
+                      </IconButton>
+                      <IconButton color="primary" aria-label="add to cart">
+                        Add to Cart
+                      </IconButton>
+                    </ButtonContainer>
+                  </ItemContainer>
+                  <div>
+                    <h2 className="pItems">{product.name}</h2>
+                    <p className="pItems">{product.description}</p>
+                    <LikeButton>
+                      <FavoriteBorder />
+                    </LikeButton>
+                    <p className="pItems">Price: ${product.price}</p>
+                  </div>
+                </Item>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Box>
+        </Box>
+      </MainContent>
+    </div>
   );
 };
 
-export default ResponsiveeGrid;
+export default ResponsiveGrid;

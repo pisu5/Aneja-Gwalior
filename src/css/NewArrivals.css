@@ -1,9 +1,15 @@
-/* NewArrivals.css */
+/* CSS for NewArrivals.css */
+
+.new-arrivals-container {
+  background-color: #f0f0f0; /* Change to your desired background color */
+  padding: 20px;
+}
 
 .section-header {
   text-align: center;
   margin: 0 auto;
   max-width: 1200px;
+  position: relative; /* Ensure the hr can be positioned absolutely */
 }
 
 .section-header hr {
@@ -14,38 +20,49 @@
 }
 
 .section-header span {
-  font-size: xx-large;
-  background-color: white;
-  padding: 0 10px;
-  font-family: "Playfair Display", serif; /* Font style moved from inline styles */
+  font-family: "Century Gothic", sans-serif;
+  font-weight: 400;
+  font-size: 40px;
 }
 
 .section-header p {
   font-family: "Century Gothic", sans-serif;
-  font-weight: 600;
+  font-size: 12px;
 }
 
 .product-container {
   display: flex;
   justify-content: center;
-  overflow-x: auto;
+  overflow-x: auto; /* Enable horizontal scrolling */
   flex-wrap: nowrap; /* Prevent wrapping to a new line */
+  -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+.product-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in Webkit browsers */
 }
 
 .product-card {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Add card shadow */
+  transition: transform 0.2s, scale 0.2s; /* Smooth transition for hover effect */
   flex: 1 0 auto; /* Allow each card to grow equally and stay in one row */
-  margin: 0; /* Remove margins between cards */
+  margin: 0 10px; /* Add margins between cards */
+}
+
+.product-card:hover {
+  transform: scale(1.05); /* Slightly enlarge card on hover */
 }
 
 .product-image {
   width: 100%;
+  height: auto;
   margin-bottom: 10px;
 }
 
 .product-name {
   font-size: 14px;
   font-family: "Century Gothic", sans-serif;
-  font-weight: 400;
   font-weight: bold;
 }
 
@@ -53,6 +70,12 @@
   color: #777; /* Adjust text color */
 }
 
+/* Ensure LikeButton is not affected */
+.MuiIconButton-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* Media query for mobile screens */
 @media (max-width: 1023px) {
@@ -68,7 +91,7 @@
   }
 
   .product-card {
-    flex: 1 0 0; /* Allow each card to grow and fill remaining space */
+    padding: 10px;
     margin: 0; /* Remove margins between cards */
   }
 

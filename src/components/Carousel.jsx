@@ -1,40 +1,36 @@
-import React, { useState } from "react";
-import Avatar from "./Avtar";
-import "../css/Carousel.css";
-import { statusCarousel } from "../data/Story";
-import ImagesStories from "./Imagies";
+import React, { useState } from 'react';
+import Avtar from './Avtar';
+import '../css/Carousel.css';
+import { statusCarousel } from '../data/Story';
+import ImagesStories from './Imagies';
 
 const Carousel = () => {
-  const handleSlide = (direction) => {
-    const slider = document.getElementsByClassName("carousel-body")[0];
-    if (direction === "left") slider.scrollBy(-400, 0);
-    else slider.scrollBy(400, 0);
-  };
-
   const [showImagesStories, setShowImagesStories] = useState(false);
+  const [selectedStory, setSelectedStory] = useState(null);
 
-  const handleAvatarClick = () => {
+  const handleAvatarClick = (story) => {
+    setSelectedStory(story);
     setShowImagesStories(true);
   };
 
   const handleCloseImagesStories = () => {
     setShowImagesStories(false);
+    setSelectedStory(null);
   };
 
   return (
     <section className="check">
       <div className="carousel-body">
         {statusCarousel.map((item, index) => (
-          <Avatar
+          <Avtar
             key={index}
             image={item}
-            onClick={handleAvatarClick}
-            index={index}
+            onClick={() => handleAvatarClick(item)}
           />
         ))}
       </div>
-      {showImagesStories && (
-        <ImagesStories onClose={handleCloseImagesStories} />
+      {showImagesStories && selectedStory && (
+        <ImagesStories story={selectedStory} onClose={handleCloseImagesStories} />
       )}
     </section>
   );

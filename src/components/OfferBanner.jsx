@@ -5,7 +5,7 @@ import { get, getDatabase, ref } from "firebase/database";
 
 const database = getDatabase(app);
 
-function CustomCarousel() {
+function Offerbanner() {
   const [images, setImagesArray] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [slideDone, setSlideDone] = useState(true);
@@ -14,9 +14,7 @@ function CustomCarousel() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const screenWidth = window.innerWidth;
-        const bannerType = screenWidth <= 768 ? "mobile" : "desktop";
-        const snapshot = await get(ref(database, `AdminData/Banners/${bannerType}`));
+        const snapshot = await get(ref(database, "AdminData/OfferBanner"));
         const data = snapshot.val();
         if (data) {
           const imagesArray = Object.values(data).map((banner, index) => ({
@@ -48,15 +46,27 @@ function CustomCarousel() {
   }, [slideDone]);
 
   const slideNext = () => {
-    setActiveIndex((val) => (val >= images.length - 1 ? 0 : val + 1));
+    setActiveIndex((val) => {
+      if (val >= images.length - 1) {
+        return 0;
+      } else {
+        return val + 1;
+      }
+    });
   };
 
   const slidePrev = () => {
-    setActiveIndex((val) => (val <= 0 ? images.length - 1 : val - 1));
+    setActiveIndex((val) => {
+      if (val <= 0) {
+        return images.length - 1;
+      } else {
+        return val - 1;
+      }
+    });
   };
 
   const AutoPlayStop = () => {
-    if (timeID) {
+    if (timeID > 0) {
       clearTimeout(timeID);
       setSlideDone(false);
     }
@@ -74,31 +84,55 @@ function CustomCarousel() {
       onMouseEnter={AutoPlayStop}
       onMouseLeave={AutoPlayStart}
     >
-      {images.map((item, index) => (
-        <div
-          className={`slider__item ${activeIndex === index ? "slider__item-active" : ""}`}
-          key={index}
-        >
-          <img src={item.imgURL} alt={item.imgAlt} />
-        </div>
-      ))}
+      {images.map((item, index) => {
+        return (
+          <div
+            className={"slider__item slider__item-active-" + (activeIndex + 1)}
+            key={index}
+          >
+            <img src={item.imgURL} alt={item.imgAlt} />
+          </div>
+        );
+      })}
 
       <div className="container__slider__links">
-        {images.map((item, index) => (
-          <button
-            key={index}
-            className={`container__slider__links-small ${
-              activeIndex === index ? "container__slider__links-small-active" : ""
-            }`}
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveIndex(index);
-            }}
-          ></button>
-        ))}
+        {images.map((item, index) => {
+          return (
+            <button
+              key={index}
+              className={
+                activeIndex === index
+                  ? "container__slider__links-small container__slider__links-small-active"
+                  : "container__slider__links-small"
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveIndex(index);
+              }}
+            ></button>
+          );
+        })}
       </div>
+
+      {/*<button
+        className="slider__btn-next"
+        onClick={(e) => {
+          e.preventDefault();
+          slideNext();
+        }}
+      >
+        Next
+      </button>
+      <button
+        className="slider__btn-prev"
+        onClick={(e) => {
+          e.preventDefault();
+          slidePrev();
+        }}
+      >
+        Previous
+      </button>*/}
     </div>
   );
 }
-
-export default CustomCarousel;
+export default Offerbanner;
